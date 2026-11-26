@@ -7,5 +7,6 @@ module org.example.ejerciciointegrador {
     requires static lombok;
 
     opens org.example.ejerciciointegrador to javafx.fxml;
+    opens org.example.ejerciciointegrador.controllers to javafx.fxml;
     exports org.example.ejerciciointegrador;
 }
