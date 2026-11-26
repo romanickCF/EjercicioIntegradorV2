@@ -6,50 +6,53 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.stream.Collectors;
 
+/**
+ * Utilidad para inicializar la base de datos de la aplicación.
+ * <p>
+ * Ejecuta el script {@code schema.sql} incluido en los recursos para crear
+ * las tablas si no existen.
+ * </p>
+ */
 public class DataBaseInitializer {
 
     /**
-        Método que se encarga de inicializar la tabla en la base de datos.
-        Usa el script init.sql
-    */
-    public static void initialize(DataSource ds){
-        executeScript(ds, "init.sql");
+     * Crea la estructura de la base de datos ejecutando {@code schema.sql}.
+     *
+     * @param ds origen de datos sobre el que se ejecuta el script
+     * @throws RuntimeException si el script no existe o falla alguna sentencia
+     */
+    public static void initialize(DataSource ds) {
+        executeScript(ds, "schema.sql");
     }
 
     /**
-        Método que carga los datos iniciales en la base de datos si la tabla
-        está vacía. Usa el script data.sql
-    */
-    public static void loadData(DataSource ds){
-        String countSql = "select count(*) from Oferta";
-
-        try (Connection conn = ds.getConnection();
-             PreparedStatement pst = conn.prepareStatement(countSql);
-             ResultSet rs = pst.executeQuery()) {
-            if (rs.next() && rs.getInt(1) == 0) {
-                executeScript(ds, "data.sql");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-        Ejecuta todas las sentencias de un script SQL ubicado en los recursos.
-    */
-    private static void executeScript(DataSource ds, String resourceName){
+     * Ejecuta todas las sentencias de un script SQL ubicado en los recursos.
+     * <p>
+     * Lee el fichero completo, ignora las líneas de comentario, lo divide por
+     * el carácter {@code ;} y ejecuta cada sentencia no vacía.
+     * </p>
+     *
+     * @param ds           origen de datos sobre el que se ejecuta el script
+     * @param resourceName nombre del fichero SQL dentro de los recursos
+     * @throws RuntimeException si el recurso no existe o si ocurre un error de
+     *                          entrada/salida o de SQL
+     */
+    private static void executeScript(DataSource ds, String resourceName) {
         try (InputStream is = DataBaseInitializer.class.getClassLoader().getResourceAsStream(resourceName)) {
             if (is == null) {
                 throw new RuntimeException("No se encontró el recurso " + resourceName);
             }
 
             String sql;
-            try (BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(is, StandardCharsets.UTF_8))) {
-                sql = reader.lines().collect(Collectors.joining("\n"));
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                sql = reader.lines()
+                        .filter(linea -> !linea.trim().startsWith("--"))
+                        .collect(Collectors.joining("\n"));
             }
 
             try (Connection conn = ds.getConnection();
@@ -64,5 +67,4 @@ public class DataBaseInitializer {
             throw new RuntimeException(e);
         }
     }
-
 }
