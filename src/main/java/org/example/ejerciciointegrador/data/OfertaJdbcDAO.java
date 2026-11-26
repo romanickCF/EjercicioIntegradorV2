@@ -149,7 +149,7 @@ public class OfertaJdbcDAO implements DAO<Oferta> {
      * @throws SQLException si ocurre un error de SQL
      */
     public boolean existe(Connection conn, Long idEmpresa, String titulo, LocalDate fecha) throws SQLException {
-        String sql = "select count(*) from oferta where id_empresa=? and titulo=? and fechaPostulacion=?";
+        String sql = "select count(*) from Oferta where id_empresa=? and titulo=? and fechaPostulacion=?";
         try (PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setLong(1, idEmpresa);
             pst.setString(2, titulo);
@@ -169,7 +169,7 @@ public class OfertaJdbcDAO implements DAO<Oferta> {
      * @throws SQLException si ocurre un error de SQL
      */
     public Oferta save(Connection conn, Oferta obj) throws SQLException {
-        String sql = "insert into oferta (id_empresa, titulo, descripcion, estado, "
+        String sql = "insert into Oferta (id_empresa, titulo, descripcion, estado, "
                 + "fechaPostulacion, enlace, salario, notas) values (?,?,?,?,?,?,?,?)";
         try (PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             rellenar(pst, obj);
@@ -207,7 +207,7 @@ public class OfertaJdbcDAO implements DAO<Oferta> {
      */
     @Override
     public void update(Oferta entity) {
-        String sql = "update oferta set id_empresa=?, titulo=?, descripcion=?, estado=?, "
+        String sql = "update Oferta set id_empresa=?, titulo=?, descripcion=?, estado=?, "
                 + "fechaPostulacion=?, enlace=?, salario=?, notas=? where id=?";
         try (Connection conn = ds.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -227,7 +227,7 @@ public class OfertaJdbcDAO implements DAO<Oferta> {
      * @throws RuntimeException si ocurre un error de SQL
      */
     public void actualizarEstado(Long id, String estado) {
-        String sql = "update oferta set estado=? where id=?";
+        String sql = "update Oferta set estado=? where id=?";
         try (Connection conn = ds.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, estado.trim().toLowerCase());
@@ -251,8 +251,8 @@ public class OfertaJdbcDAO implements DAO<Oferta> {
     public void deleteById(Long id) {
         try (Connection conn = ds.getConnection()) {
             conn.setAutoCommit(false);
-            try (PreparedStatement p1 = conn.prepareStatement("delete from entrevista where id_oferta=?");
-                 PreparedStatement p2 = conn.prepareStatement("delete from oferta where id=?")) {
+            try (PreparedStatement p1 = conn.prepareStatement("delete from Entrevista where id_oferta=?");
+                 PreparedStatement p2 = conn.prepareStatement("delete from Oferta where id=?")) {
                 p1.setLong(1, id);
                 p1.executeUpdate();
                 p2.setLong(1, id);

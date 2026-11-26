@@ -1,16 +1,16 @@
 package org.example.ejerciciointegrador.controllers;
 
-import com.candidaturas.common.Alertas;
-import com.candidaturas.common.AppContext;
-import com.candidaturas.common.SceneNavigator;
-import com.candidaturas.data.EmpresaJdbcDAO;
-import com.candidaturas.data.OfertaJdbcDAO;
-import com.candidaturas.models.Empresa;
-import com.candidaturas.models.Oferta;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import org.example.ejerciciointegrador.common.Alertas;
+import org.example.ejerciciointegrador.common.AppContext;
+import org.example.ejerciciointegrador.common.SceneNavigator;
+import org.example.ejerciciointegrador.data.EmpresaJdbcDAO;
+import org.example.ejerciciointegrador.data.OfertaJdbcDAO;
+import org.example.ejerciciointegrador.models.Empresa;
+import org.example.ejerciciointegrador.models.Oferta;
 
 import java.net.URL;
 import java.time.LocalDate;
