@@ -12,8 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.example.ejerciciointegrador.common.Alertas;
 import org.example.ejerciciointegrador.common.AppContext;
 import org.example.ejerciciointegrador.common.SceneNavigator;
+import org.example.ejerciciointegrador.data.EmpresaJdbcDAO;
 import org.example.ejerciciointegrador.data.FiltroOferta;
 import org.example.ejerciciointegrador.data.OfertaJdbcDAO;
+import org.example.ejerciciointegrador.models.Empresa;
 import org.example.ejerciciointegrador.models.Oferta;
 import org.example.ejerciciointegrador.service.CsvImportService;
 
@@ -43,9 +45,9 @@ public class OfertasController implements Initializable {
     @FXML
     private TextField txtTexto;
 
-    /** Campo de filtro por empresa. */
+    /** Desplegable editable de filtro por empresa (permite elegir o escribir). */
     @FXML
-    private TextField txtEmpresa;
+    private ComboBox<String> cmbEmpresa;
 
     /** Selector del estado por el que filtrar. */
     @FXML
@@ -105,6 +107,9 @@ public class OfertasController implements Initializable {
     /** Servicio utilizado para importar el CSV. */
     private final CsvImportService importService;
 
+    /** DAO utilizado para cargar las empresas del desplegable de filtro. */
+    private final EmpresaJdbcDAO empresaDAO;
+
     /**
      * Se invoca automáticamente después de cargar el FXML.
      * <p>
@@ -117,6 +122,8 @@ public class OfertasController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        recargarEmpresas();
+
         cmbEstado.getItems().add(TODOS);
         cmbEstado.getItems().addAll(Oferta.ESTADOS);
         cmbEstado.getSelectionModel().selectFirst();
@@ -167,7 +174,8 @@ public class OfertasController implements Initializable {
     @FXML
     public void limpiar(ActionEvent actionEvent) {
         txtTexto.clear();
-        txtEmpresa.clear();
+        cmbEmpresa.getEditor().clear();
+        cmbEmpresa.setValue(null);
         txtSalarioMin.clear();
         txtSalarioMax.clear();
         dpDesde.setValue(null);
@@ -267,6 +275,7 @@ public class OfertasController implements Initializable {
         try {
             int nuevas = importService.importar(fichero.toPath());
             Alertas.info("Importación correcta: " + nuevas + " candidaturas añadidas.");
+            recargarEmpresas();
             cargar();
         } catch (NoSuchFileException e) {
             Alertas.error("Archivo no encontrado: " + fichero);
@@ -280,6 +289,16 @@ public class OfertasController implements Initializable {
     }
 
     /* Métodos auxiliares */
+
+    /**
+     * Carga en el desplegable los nombres de las empresas existentes.
+     */
+    private void recargarEmpresas() {
+        List<String> nombres = empresaDAO.findAll().stream()
+                .map(Empresa::getNombre)
+                .toList();
+        cmbEmpresa.getItems().setAll(nombres);
+    }
 
     /**
      * Consulta las ofertas con los filtros actuales y rellena la tabla.
@@ -318,7 +337,7 @@ public class OfertasController implements Initializable {
         if (desde != null && hasta != null && desde.isAfter(hasta)) {
             throw new IllegalArgumentException("La fecha \"desde\" no puede ser posterior a \"hasta\".");
         }
-        return new FiltroOferta(txtTexto.getText(), txtEmpresa.getText(), estado, min, max, desde, hasta);
+        return new FiltroOferta(txtTexto.getText(), cmbEmpresa.getEditor().getText(), estado, min, max, desde, hasta);
     }
 
     /**

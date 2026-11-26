@@ -87,7 +87,7 @@ public class SceneNavigator {
 
         fxmlLoader.setControllerFactory(type -> {
             if (type == OfertasController.class) {
-                return new OfertasController(ofertaDAO, importService);
+                return new OfertasController(ofertaDAO, importService, empresaDAO);
             } else if (type == OfertaDetailController.class) {
                 return new OfertaDetailController(ofertaDAO, empresaDAO, entrevistaDAO);
             } else if (type == OfertaFormController.class) {

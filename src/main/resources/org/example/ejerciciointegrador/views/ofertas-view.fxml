@@ -109,7 +109,7 @@
                               <Label styleClass="etiqueta" text="Texto" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                               <TextField fx:id="txtTexto" promptText="título o notas" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                               <Label styleClass="etiqueta" text="Empresa" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                              <TextField fx:id="txtEmpresa" promptText="nombre de empresa" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                              <ComboBox fx:id="cmbEmpresa" editable="true" promptText="nombre de empresa" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                               <Label styleClass="etiqueta" text="Estado" GridPane.columnIndex="4" GridPane.rowIndex="0" />
                               <ComboBox fx:id="cmbEstado" maxWidth="1.7976931348623157E308" GridPane.columnIndex="5" GridPane.rowIndex="0" />
 

@@ -42,7 +42,7 @@
                         <Label styleClass="etiqueta" text="Título *" GridPane.rowIndex="0" />
                         <TextField fx:id="txtTitulo" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                         <Label styleClass="etiqueta" text="Empresa *" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="cmbEmpresa" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtEmpresa" maxWidth="1.7976931348623157E308" promptText="Nombre de la empresa" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label styleClass="etiqueta" text="Estado *" GridPane.rowIndex="2" />
                         <ComboBox fx:id="cmbEstado" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label styleClass="etiqueta" text="Fecha *" GridPane.rowIndex="3" />

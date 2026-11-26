@@ -15,7 +15,6 @@ import org.example.ejerciciointegrador.models.Oferta;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -23,7 +22,8 @@ import java.util.ResourceBundle;
  * <p>
  * Si en el {@link AppContext} existe una oferta, el formulario se rellena con
  * sus datos y al guardar se actualiza; en caso contrario se crea una nueva.
- * Valida los campos antes de guardar.
+ * Valida los campos antes de guardar. El nombre de la empresa es texto libre:
+ * si no existe, se crea automáticamente al guardar.
  * </p>
  */
 @RequiredArgsConstructor
@@ -37,9 +37,9 @@ public class OfertaFormController implements Initializable {
     @FXML
     private TextField txtTitulo;
 
-    /** Selector de la empresa. */
+    /** Campo con el nombre de la empresa (texto libre). */
     @FXML
-    private ComboBox<Empresa> cmbEmpresa;
+    private TextField txtEmpresa;
 
     /** Selector del estado. */
     @FXML
@@ -77,8 +77,8 @@ public class OfertaFormController implements Initializable {
     /**
      * Se invoca automáticamente después de cargar el FXML.
      * <p>
-     * Rellena los desplegables y, si hay una oferta en el {@link AppContext},
-     * carga sus datos en el formulario.
+     * Rellena el desplegable de estados y, si hay una oferta en el
+     * {@link AppContext}, carga sus datos en el formulario.
      * </p>
      *
      * @param location  ubicación usada para resolver rutas relativas, o {@code null}
@@ -86,18 +86,13 @@ public class OfertaFormController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Empresa> empresas = empresaDAO.findAll();
-        cmbEmpresa.getItems().addAll(empresas);
         cmbEstado.getItems().addAll(Oferta.ESTADOS);
 
         oferta = (Oferta) AppContext.getInstance().get("oferta");
         if (oferta != null) {
             lblCabecera.setText("Editar candidatura");
             txtTitulo.setText(oferta.getTitulo());
-            empresas.stream()
-                    .filter(e -> e.getId().equals(oferta.getIdEmpresa()))
-                    .findFirst()
-                    .ifPresent(cmbEmpresa::setValue);
+            txtEmpresa.setText(oferta.getEmpresaNombre() == null ? "" : oferta.getEmpresaNombre());
             cmbEstado.setValue(oferta.getEstado());
             dpFecha.setValue(oferta.getFechaPostulacion());
             txtSalario.setText(oferta.getSalario() == null ? "" : String.valueOf(oferta.getSalario()));
@@ -126,9 +121,13 @@ public class OfertaFormController implements Initializable {
 
         boolean nueva = (oferta == null);
         Oferta datos = nueva ? new Oferta() : oferta;
+        String nombreEmpresa = txtEmpresa.getText().trim();
+        Empresa empresa = empresaDAO.findByNombre(nombreEmpresa)
+                .orElseGet(() -> crearEmpresa(nombreEmpresa));
+
         datos.setTitulo(txtTitulo.getText().trim());
-        datos.setIdEmpresa(cmbEmpresa.getValue().getId());
-        datos.setEmpresaNombre(cmbEmpresa.getValue().getNombre());
+        datos.setIdEmpresa(empresa.getId());
+        datos.setEmpresaNombre(empresa.getNombre());
         datos.setEstado(cmbEstado.getValue());
         datos.setFechaPostulacion(dpFecha.getValue());
         datos.setSalario(salarioIntroducido());
@@ -170,8 +169,8 @@ public class OfertaFormController implements Initializable {
         if (txtTitulo.getText() == null || txtTitulo.getText().isBlank()) {
             return "El título es obligatorio.";
         }
-        if (cmbEmpresa.getValue() == null) {
-            return "Selecciona una empresa. Si no existe, créala antes en la pantalla de empresas.";
+        if (txtEmpresa.getText() == null || txtEmpresa.getText().isBlank()) {
+            return "El nombre de la empresa es obligatorio.";
         }
         if (!Oferta.esEstadoValido(cmbEstado.getValue())) {
             return "Selecciona un estado válido.";
@@ -194,6 +193,19 @@ public class OfertaFormController implements Initializable {
             return "El enlace debe empezar por http:// o https://";
         }
         return null;
+    }
+
+    /**
+     * Crea una empresa nueva cuando el nombre escrito no existe todavía.
+     *
+     * @param nombre nombre introducido en el formulario
+     * @return la empresa guardada, con su identificador asignado
+     */
+    private Empresa crearEmpresa(String nombre) {
+        Empresa empresa = new Empresa();
+        empresa.setNombre(nombre);
+        empresa.setFechaRegistro(LocalDate.now());
+        return empresaDAO.save(empresa);
     }
 
     /**
