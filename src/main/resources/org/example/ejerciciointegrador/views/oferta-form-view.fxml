@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="720.0" prefWidth="1080.0" styleClass="trackly-root" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ejerciciointegrador.controllers.OfertaFormController">
+   <center>
+      <VBox alignment="CENTER" maxWidth="680.0" spacing="16.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="28.0" left="24.0" right="24.0" top="28.0" />
+         </padding>
+         <children>
+            <VBox spacing="16.0" styleClass="card-surface">
+               <padding>
+                  <Insets bottom="24.0" left="28.0" right="28.0" top="24.0" />
+               </padding>
+               <children>
+                  <VBox spacing="4.0">
+                     <children>
+                        <Label fx:id="lblCabecera" styleClass="titulo" text="Candidatura" />
+                        <Label styleClass="subtitulo" text="Registra los detalles para mantener tu búsqueda al día." />
+                     </children>
+                  </VBox>
+                  <GridPane hgap="14.0" vgap="12.0">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="110.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                     </columnConstraints>
+                     <children>
+                        <Label styleClass="etiqueta" text="Título *" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtTitulo" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label styleClass="etiqueta" text="Empresa *" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cmbEmpresa" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label styleClass="etiqueta" text="Estado *" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="cmbEstado" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label styleClass="etiqueta" text="Fecha *" GridPane.rowIndex="3" />
+                        <DatePicker fx:id="dpFecha" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label styleClass="etiqueta" text="Salario (€)" GridPane.rowIndex="4" />
+                        <TextField fx:id="txtSalario" promptText="opcional" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label styleClass="etiqueta" text="Enlace" GridPane.rowIndex="5" />
+                        <TextField fx:id="txtEnlace" promptText="https://..." GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label styleClass="etiqueta" text="Descripción" GridPane.rowIndex="6" />
+                        <TextArea fx:id="txtDescripcion" prefRowCount="3" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label styleClass="etiqueta" text="Notas" GridPane.rowIndex="7" />
+                        <TextArea fx:id="txtNotas" prefRowCount="3" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                     </children>
+                  </GridPane>
+                  <FlowPane alignment="CENTER_RIGHT" hgap="12.0">
+                     <padding>
+                        <Insets top="6.0" />
+                     </padding>
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#goBack" styleClass="btn-secondary" text="Volver">
+                           <graphic>
+                              <ImageView fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../previous.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#save" styleClass="btn-primary" text="Guardar">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../disk.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </FlowPane>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
