@@ -1,10 +1,5 @@
 package org.example.ejerciciointegrador.controllers;
 
-import com.candidaturas.common.Alertas;
-import com.candidaturas.common.AppContext;
-import com.candidaturas.common.SceneNavigator;
-import com.candidaturas.data.EmpresaJdbcDAO;
-import com.candidaturas.models.Empresa;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -13,6 +8,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import org.example.ejerciciointegrador.common.Alertas;
+import org.example.ejerciciointegrador.common.AppContext;
+import org.example.ejerciciointegrador.common.SceneNavigator;
+import org.example.ejerciciointegrador.data.EmpresaJdbcDAO;
+import org.example.ejerciciointegrador.models.Empresa;
 
 import java.net.URL;
 import java.util.List;
