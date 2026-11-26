@@ -10,7 +10,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import org.example.ejerciciointegrador.common.Alertas;
 import org.example.ejerciciointegrador.common.AppContext;
-import org.example.ejerciciointegrador.common.SceneNavigator;
 import org.example.ejerciciointegrador.data.EmpresaJdbcDAO;
 import org.example.ejerciciointegrador.models.Empresa;
 
