@@ -1,6 +1,7 @@
 package org.example.ejerciciointegrador.data;
 
 
+import lombok.RequiredArgsConstructor;
 import org.example.ejerciciointegrador.models.Empresa;
 
 import javax.sql.DataSource;
@@ -17,19 +18,11 @@ import java.util.Optional;
  * iniciada por otra clase (por ejemplo, la importación del CSV).
  * </p>
  */
+@RequiredArgsConstructor
 public class EmpresaJdbcDAO implements DAO<Empresa> {
 
     /** Origen de datos utilizado para obtener las conexiones JDBC. */
     private final DataSource ds;
-
-    /**
-     * Crea una instancia del DAO.
-     *
-     * @param ds {@link DataSource} del que se obtendrán las conexiones
-     */
-    public EmpresaJdbcDAO(DataSource ds) {
-        this.ds = ds;
-    }
 
     /**
      * Busca una empresa por su identificador.
@@ -40,7 +33,7 @@ public class EmpresaJdbcDAO implements DAO<Empresa> {
      */
     @Override
     public Optional<Empresa> findById(Long id) {
-        String sql = "select * from Empresa where id=?";
+        String sql = "select * from empresa where id=?";
         try (Connection conn = ds.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setLong(1, id);
@@ -64,7 +57,7 @@ public class EmpresaJdbcDAO implements DAO<Empresa> {
      * @throws SQLException si ocurre un error de SQL
      */
     public Optional<Empresa> findByNombre(Connection conn, String nombre) throws SQLException {
-        String sql = "select * from Empresa where nombre=?";
+        String sql = "select * from empresa where nombre=?";
         try (PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, nombre);
             try (ResultSet rs = pst.executeQuery()) {
@@ -99,7 +92,7 @@ public class EmpresaJdbcDAO implements DAO<Empresa> {
      */
     @Override
     public List<Empresa> findAll() {
-        String sql = "select * from Empresa order by nombre";
+        String sql = "select * from empresa order by nombre";
         List<Empresa> empresas = new ArrayList<>();
         try (Connection conn = ds.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql);
@@ -122,7 +115,7 @@ public class EmpresaJdbcDAO implements DAO<Empresa> {
      * @throws SQLException si ocurre un error de SQL
      */
     public Empresa save(Connection conn, Empresa obj) throws SQLException {
-        String sql = "insert into Empresa (nombre, sector, web, fechaRegistro) values (?,?,?,?)";
+        String sql = "insert into empresa (nombre, sector, web, fechaRegistro) values (?,?,?,?)";
         try (PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pst.setString(1, obj.getNombre());
             pst.setString(2, vacioANull(obj.getSector()));
@@ -162,7 +155,7 @@ public class EmpresaJdbcDAO implements DAO<Empresa> {
      */
     @Override
     public void update(Empresa entity) {
-        String sql = "update Empresa set nombre=?, sector=?, web=?, fechaRegistro=? where id=?";
+        String sql = "update empresa set nombre=?, sector=?, web=?, fechaRegistro=? where id=?";
         try (Connection conn = ds.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, entity.getNombre());
@@ -184,7 +177,7 @@ public class EmpresaJdbcDAO implements DAO<Empresa> {
      * @throws RuntimeException si ocurre un error de SQL
      */
     public int contarOfertas(Long idEmpresa) {
-        String sql = "select count(*) from Oferta where id_empresa=?";
+        String sql = "select count(*) from oferta where id_empresa=?";
         try (Connection conn = ds.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setLong(1, idEmpresa);
@@ -208,10 +201,10 @@ public class EmpresaJdbcDAO implements DAO<Empresa> {
      */
     @Override
     public void deleteById(Long id) {
-        String sqlEntrevistas = "delete from Entrevista where id_oferta in "
-                + "(select id from Oferta where id_empresa=?)";
-        String sqlOfertas = "delete from Oferta where id_empresa=?";
-        String sqlEmpresa = "delete from Empresa where id=?";
+        String sqlEntrevistas = "delete from entrevista where id_oferta in "
+                + "(select id from oferta where id_empresa=?)";
+        String sqlOfertas = "delete from oferta where id_empresa=?";
+        String sqlEmpresa = "delete from empresa where id=?";
 
         try (Connection conn = ds.getConnection()) {
             conn.setAutoCommit(false);

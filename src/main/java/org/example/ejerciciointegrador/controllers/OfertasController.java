@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.stage.FileChooser;
+import lombok.RequiredArgsConstructor;
 import org.example.ejerciciointegrador.common.Alertas;
 import org.example.ejerciciointegrador.common.AppContext;
 import org.example.ejerciciointegrador.common.SceneNavigator;
@@ -32,6 +33,7 @@ import java.util.ResourceBundle;
  * navegar al detalle, crear, editar o borrar ofertas e importar el CSV inicial.
  * </p>
  */
+@RequiredArgsConstructor
 public class OfertasController implements Initializable {
 
     /** Texto del selector de estado que significa "sin filtrar por estado". */
@@ -102,17 +104,6 @@ public class OfertasController implements Initializable {
 
     /** Servicio utilizado para importar el CSV. */
     private final CsvImportService importService;
-
-    /**
-     * Crea el controlador inyectando sus dependencias.
-     *
-     * @param ofertaDAO     DAO de ofertas
-     * @param importService servicio de importación de CSV
-     */
-    public OfertasController(OfertaJdbcDAO ofertaDAO, CsvImportService importService) {
-        this.ofertaDAO = ofertaDAO;
-        this.importService = importService;
-    }
 
     /**
      * Se invoca automáticamente después de cargar el FXML.

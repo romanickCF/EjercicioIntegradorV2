@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
+import lombok.RequiredArgsConstructor;
 import org.example.ejerciciointegrador.common.Alertas;
 import org.example.ejerciciointegrador.common.AppContext;
 import org.example.ejerciciointegrador.common.SceneNavigator;
@@ -32,6 +33,7 @@ import java.util.ResourceBundle;
  * alta, edición y borrado (HU-11).
  * </p>
  */
+@RequiredArgsConstructor
 public class OfertaDetailController implements Initializable {
 
     /** Título de la oferta. */
@@ -113,20 +115,6 @@ public class OfertaDetailController implements Initializable {
 
     /** Oferta que se está mostrando. */
     private Oferta oferta;
-
-    /**
-     * Crea el controlador inyectando sus dependencias.
-     *
-     * @param ofertaDAO     DAO de ofertas
-     * @param empresaDAO    DAO de empresas
-     * @param entrevistaDAO DAO de entrevistas
-     */
-    public OfertaDetailController(OfertaJdbcDAO ofertaDAO, EmpresaJdbcDAO empresaDAO,
-                                  EntrevistaJdbcDAO entrevistaDAO) {
-        this.ofertaDAO = ofertaDAO;
-        this.empresaDAO = empresaDAO;
-        this.entrevistaDAO = entrevistaDAO;
-    }
 
     /**
      * Se invoca automáticamente después de cargar el FXML.

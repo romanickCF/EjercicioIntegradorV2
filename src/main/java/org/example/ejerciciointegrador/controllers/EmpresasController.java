@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import lombok.RequiredArgsConstructor;
 import org.example.ejerciciointegrador.common.Alertas;
 import org.example.ejerciciointegrador.common.AppContext;
 import org.example.ejerciciointegrador.common.SceneNavigator;
@@ -24,6 +25,7 @@ import java.util.ResourceBundle;
  * Muestra las empresas en una tabla y permite crear, editar y borrar.
  * </p>
  */
+@RequiredArgsConstructor
 public class EmpresasController implements Initializable {
 
     /** Tabla con el listado de empresas. */
@@ -56,15 +58,6 @@ public class EmpresasController implements Initializable {
 
     /** DAO de empresas. */
     private final EmpresaJdbcDAO empresaDAO;
-
-    /**
-     * Crea el controlador inyectando el DAO de empresas.
-     *
-     * @param empresaDAO DAO de empresas
-     */
-    public EmpresasController(EmpresaJdbcDAO empresaDAO) {
-        this.empresaDAO = empresaDAO;
-    }
 
     /**
      * Se invoca automáticamente después de cargar el FXML.

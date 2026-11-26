@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import lombok.RequiredArgsConstructor;
 import org.example.ejerciciointegrador.common.Alertas;
 import org.example.ejerciciointegrador.common.AppContext;
 import org.example.ejerciciointegrador.common.SceneNavigator;
@@ -25,6 +26,7 @@ import java.util.ResourceBundle;
  * sus datos y al guardar se actualiza; en caso contrario se crea una nueva.
  * </p>
  */
+@RequiredArgsConstructor
 public class EmpresaFormController implements Initializable {
 
     /** Título del formulario. */
@@ -52,15 +54,6 @@ public class EmpresaFormController implements Initializable {
 
     /** Empresa que se edita, o {@code null} si se está creando una nueva. */
     private Empresa empresa;
-
-    /**
-     * Crea el controlador inyectando el DAO de empresas.
-     *
-     * @param empresaDAO DAO de empresas
-     */
-    public EmpresaFormController(EmpresaJdbcDAO empresaDAO) {
-        this.empresaDAO = empresaDAO;
-    }
 
     /**
      * Se invoca automáticamente después de cargar el FXML.

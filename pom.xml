@@ -89,7 +89,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.example.ejerciciointegrador/org.example.ejerciciointegrador.HelloApplication
+                                org.example.ejerciciointegrador/org.example.ejerciciointegrador.App
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

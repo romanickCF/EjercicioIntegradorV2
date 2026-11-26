@@ -1,6 +1,7 @@
 package org.example.ejerciciointegrador.service;
 
 
+import lombok.RequiredArgsConstructor;
 import org.example.ejerciciointegrador.data.EmpresaJdbcDAO;
 import org.example.ejerciciointegrador.data.OfertaJdbcDAO;
 import org.example.ejerciciointegrador.models.Empresa;
@@ -26,6 +27,7 @@ import java.util.*;
  * transacción: si falla algo no se guarda nada.
  * </p>
  */
+@RequiredArgsConstructor
 public class CsvImportService {
 
     /** Cabecera esperada en la primera línea del CSV. */
@@ -39,19 +41,6 @@ public class CsvImportService {
 
     /** DAO de ofertas. */
     private final OfertaJdbcDAO ofertaDAO;
-
-    /**
-     * Crea el servicio inyectando sus dependencias.
-     *
-     * @param ds         origen de datos
-     * @param empresaDAO DAO de empresas
-     * @param ofertaDAO  DAO de ofertas
-     */
-    public CsvImportService(DataSource ds, EmpresaJdbcDAO empresaDAO, OfertaJdbcDAO ofertaDAO) {
-        this.ds = ds;
-        this.empresaDAO = empresaDAO;
-        this.ofertaDAO = ofertaDAO;
-    }
 
     /**
      * Importa el fichero CSV indicado.
@@ -70,7 +59,7 @@ public class CsvImportService {
             throw new IllegalArgumentException("El fichero está vacío.");
         }
 
-        String cabecera = lineas.get(0).replace("\uFEFF", "").trim().toLowerCase();
+        String cabecera = lineas.getFirst().replace("\uFEFF", "").trim().toLowerCase();
         if (!cabecera.equals(CABECERA)) {
             throw new IllegalArgumentException("Cabecera incorrecta. Se esperaba: id;titulo;empresa;estado;fechaPostulacion;enlace;notas");
         }

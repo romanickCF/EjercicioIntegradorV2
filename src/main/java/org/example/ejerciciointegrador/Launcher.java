@@ -16,7 +16,7 @@ public class Launcher {
      *
      * @param args argumentos de línea de comandos (no se utilizan)
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         Application.launch(App.class, args);
     }
 }

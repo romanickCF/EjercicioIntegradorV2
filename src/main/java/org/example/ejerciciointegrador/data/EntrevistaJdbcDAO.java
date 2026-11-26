@@ -2,6 +2,7 @@ package org.example.ejerciciointegrador.data;
 
 
 
+import lombok.RequiredArgsConstructor;
 import org.example.ejerciciointegrador.models.Entrevista;
 
 import javax.sql.DataSource;
@@ -17,19 +18,11 @@ import java.util.Optional;
  * clave ajena {@code id_oferta}.
  * </p>
  */
+@RequiredArgsConstructor
 public class EntrevistaJdbcDAO implements DAO<Entrevista> {
 
     /** Origen de datos utilizado para obtener las conexiones JDBC. */
     private final DataSource ds;
-
-    /**
-     * Crea una instancia del DAO.
-     *
-     * @param ds {@link DataSource} del que se obtendrán las conexiones
-     */
-    public EntrevistaJdbcDAO(DataSource ds) {
-        this.ds = ds;
-    }
 
     /**
      * Busca una entrevista por su identificador.
@@ -40,7 +33,7 @@ public class EntrevistaJdbcDAO implements DAO<Entrevista> {
      */
     @Override
     public Optional<Entrevista> findById(Long id) {
-        String sql = "select * from Entrevista where id=?";
+        String sql = "select * from entrevista where id=?";
         try (Connection conn = ds.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setLong(1, id);
@@ -86,7 +79,7 @@ public class EntrevistaJdbcDAO implements DAO<Entrevista> {
      */
     @Override
     public Entrevista save(Entrevista obj) {
-        String sql = "insert into Entrevista (id_oferta, fecha, tipo, notas, resultado) values (?,?,?,?,?)";
+        String sql = "insert into entrevista (id_oferta, fecha, tipo, notas, resultado) values (?,?,?,?,?)";
         try (Connection conn = ds.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pst.setLong(1, obj.getIdOferta());
@@ -114,7 +107,7 @@ public class EntrevistaJdbcDAO implements DAO<Entrevista> {
      */
     @Override
     public void update(Entrevista entity) {
-        String sql = "update Entrevista set fecha=?, tipo=?, notas=?, resultado=? where id=?";
+        String sql = "update entrevista set fecha=?, tipo=?, notas=?, resultado=? where id=?";
         try (Connection conn = ds.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setTimestamp(1, Timestamp.valueOf(entity.getFecha()));
@@ -136,7 +129,7 @@ public class EntrevistaJdbcDAO implements DAO<Entrevista> {
      */
     @Override
     public void deleteById(Long id) {
-        String sql = "delete from Entrevista where id=?";
+        String sql = "delete from entrevista where id=?";
         try (Connection conn = ds.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setLong(1, id);

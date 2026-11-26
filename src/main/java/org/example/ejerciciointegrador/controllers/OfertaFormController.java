@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import lombok.RequiredArgsConstructor;
 import org.example.ejerciciointegrador.common.Alertas;
 import org.example.ejerciciointegrador.common.AppContext;
 import org.example.ejerciciointegrador.common.SceneNavigator;
@@ -25,6 +26,7 @@ import java.util.ResourceBundle;
  * Valida los campos antes de guardar.
  * </p>
  */
+@RequiredArgsConstructor
 public class OfertaFormController implements Initializable {
 
     /** Título del formulario. */
@@ -71,17 +73,6 @@ public class OfertaFormController implements Initializable {
 
     /** Oferta que se edita, o {@code null} si se está creando una nueva. */
     private Oferta oferta;
-
-    /**
-     * Crea el controlador inyectando sus dependencias.
-     *
-     * @param ofertaDAO  DAO de ofertas
-     * @param empresaDAO DAO de empresas
-     */
-    public OfertaFormController(OfertaJdbcDAO ofertaDAO, EmpresaJdbcDAO empresaDAO) {
-        this.ofertaDAO = ofertaDAO;
-        this.empresaDAO = empresaDAO;
-    }
 
     /**
      * Se invoca automáticamente después de cargar el FXML.

@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import lombok.RequiredArgsConstructor;
 import org.example.ejerciciointegrador.common.Alertas;
 import org.example.ejerciciointegrador.common.AppContext;
 import org.example.ejerciciointegrador.common.SceneNavigator;
@@ -27,6 +28,7 @@ import java.util.ResourceBundle;
  * crea una nueva. Al terminar vuelve a la pantalla de detalle de la oferta.
  * </p>
  */
+@RequiredArgsConstructor
 public class EntrevistaFormController implements Initializable {
 
     /** Formato de la hora admitido en el formulario (por ejemplo 9:30 o 16:45). */
@@ -68,15 +70,6 @@ public class EntrevistaFormController implements Initializable {
 
     /** Entrevista que se edita, o {@code null} si se está creando una nueva. */
     private Entrevista entrevista;
-
-    /**
-     * Crea el controlador inyectando el DAO de entrevistas.
-     *
-     * @param entrevistaDAO DAO de entrevistas
-     */
-    public EntrevistaFormController(EntrevistaJdbcDAO entrevistaDAO) {
-        this.entrevistaDAO = entrevistaDAO;
-    }
 
     /**
      * Se invoca automáticamente después de cargar el FXML.
