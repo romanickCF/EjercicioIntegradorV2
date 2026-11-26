@@ -3,6 +3,7 @@ package org.example.ejerciciointegrador.models;
 import lombok.Data;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 /**
@@ -82,4 +83,85 @@ public class Oferta {
          */
         private String notas;
 
+        /**
+         * Comprueba si un texto corresponde a un estado permitido.
+         *
+         * @param estado texto a comprobar (no distingue mayúsculas de minúsculas)
+         * @return {@code true} si es uno de los estados de {@link #ESTADOS}
+         */
+        public static boolean esEstadoValido(String estado) {
+                return estado != null && ESTADOS.contains(estado.trim().toLowerCase());
+        }
+
+        /**
+         * Construye una oferta a partir de una línea del CSV de candidaturas.
+         * <p>
+         * Formato esperado:
+         * {@code id;titulo;empresa;estado;fechaPostulacion;enlace;notas}.
+         * El identificador del CSV se ignora (lo asigna la base de datos) y el
+         * salario queda a {@code null} porque el CSV no lo incluye. La oferta
+         * devuelta solo tiene {@link #empresaNombre}; el servicio de importación
+         * debe resolver o crear la empresa para asignar {@link #idEmpresa}.
+         * </p>
+         *
+         * @param linea línea del CSV (sin la cabecera)
+         * @return la oferta construida
+         * @throws IllegalArgumentException si faltan columnas, hay campos
+         *                                  obligatorios vacíos, el estado no es
+         *                                  válido o la fecha no tiene el formato
+         *                                  dd/MM/yyyy
+         */
+        public static Oferta desdeLineaCsv(String linea) {
+                String[] c = linea.split(";", -1); // -1 conserva los campos vacíos finales
+                if (c.length < 7) {
+                        throw new IllegalArgumentException("Se esperaban 7 columnas y hay " + c.length + ": " + linea);
+                }
+
+                String titulo = c[1].trim();
+                String empresa = c[2].trim();
+                String estado = c[3].trim().toLowerCase();
+
+                if (titulo.isEmpty() || empresa.isEmpty()) {
+                        throw new IllegalArgumentException("Título y empresa son obligatorios: " + linea);
+                }
+                if (!esEstadoValido(estado)) {
+                        throw new IllegalArgumentException("Estado no válido '" + c[3] + "' en: " + linea);
+                }
+
+                LocalDate fecha;
+                try {
+                        fecha = LocalDate.parse(c[4].trim(), FORMATO_FECHA);
+                } catch (DateTimeParseException e) {
+                        throw new IllegalArgumentException("Fecha no válida '" + c[4] + "' (usa dd/MM/yyyy) en: " + linea);
+                }
+
+                Oferta oferta = new Oferta();
+                oferta.setTitulo(titulo);
+                oferta.setEmpresaNombre(empresa);
+                oferta.setEstado(estado);
+                oferta.setFechaPostulacion(fecha);
+                oferta.setEnlace(c[5].trim());
+                oferta.setNotas(c[6].trim());
+                return oferta;
+        }
+
+        /**
+         * Devuelve la fecha de postulación con formato dd/MM/yyyy, lista para
+         * mostrarse en la tabla o en el detalle.
+         *
+         * @return la fecha formateada, o cadena vacía si no hay fecha
+         */
+        public String getFechaTexto() {
+                return fechaPostulacion == null ? "" : fechaPostulacion.format(FORMATO_FECHA);
+        }
+
+        /**
+         * Devuelve el salario como texto para la interfaz.
+         *
+         * @return el salario con dos decimales y símbolo del euro, o {@code "--"}
+         *         si no se conoce
+         */
+        public String getSalarioTexto() {
+                return salario == null ? "--" : String.format("%.2f €", salario);
+        }
 }
