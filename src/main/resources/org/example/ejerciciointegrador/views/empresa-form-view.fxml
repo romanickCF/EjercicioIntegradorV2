@@ -17,64 +17,52 @@
    <center>
       <VBox alignment="CENTER" maxWidth="580.0" spacing="18.0" BorderPane.alignment="CENTER">
          <padding>
-            <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+            <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
          </padding>
-         <children>
-            <VBox spacing="18.0" styleClass="card-surface">
-               <padding>
-                  <Insets bottom="24.0" left="28.0" right="28.0" top="24.0" />
-               </padding>
-               <children>
-                  <VBox spacing="4.0">
-                     <children>
-                        <Label fx:id="lblCabecera" styleClass="titulo" text="Empresa" />
-                        <Label styleClass="subtitulo" text="Crea o actualiza el perfil de la empresa." />
-                     </children>
-                  </VBox>
-                  <GridPane hgap="14.0" vgap="12.0">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="RIGHT" minWidth="105.0" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                     </columnConstraints>
-                     <children>
-                        <Label styleClass="etiqueta" text="Nombre *" GridPane.rowIndex="0" />
-                        <TextField fx:id="txtNombre" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                        <Label styleClass="etiqueta" text="Sector" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtSector" promptText="opcional" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label styleClass="etiqueta" text="Web" GridPane.rowIndex="2" />
-                        <TextField fx:id="txtWeb" promptText="https://..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label styleClass="etiqueta" text="Registro *" GridPane.rowIndex="3" />
-                        <DatePicker fx:id="dpFecha" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                     </children>
-                  </GridPane>
-                  <FlowPane alignment="CENTER_RIGHT" hgap="12.0">
-                     <padding>
-                        <Insets top="6.0" />
-                     </padding>
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#goBack" styleClass="btn-secondary" text="Volver">
-                           <graphic>
-                              <ImageView fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../previous.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#save" styleClass="btn-primary" text="Guardar">
-                           <graphic>
-                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../disk.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </FlowPane>
-               </children>
+         <VBox spacing="18.0" styleClass="card-surface">
+            <padding>
+               <Insets bottom="24.0" left="28.0" right="28.0" top="24.0"/>
+            </padding>
+            <VBox spacing="4.0">
+               <Label fx:id="lblCabecera" styleClass="titulo" text="Empresa"/>
+               <Label styleClass="subtitulo" text="Crea o actualiza el perfil de la empresa."/>
             </VBox>
-         </children>
+            <GridPane hgap="14.0" vgap="12.0">
+               <columnConstraints>
+                  <ColumnConstraints halignment="RIGHT" minWidth="105.0"/>
+                  <ColumnConstraints hgrow="ALWAYS"/>
+               </columnConstraints>
+               <Label styleClass="etiqueta" text="Nombre *" GridPane.rowIndex="0"/>
+               <TextField fx:id="txtNombre" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+               <Label styleClass="etiqueta" text="Sector" GridPane.rowIndex="1"/>
+               <TextField fx:id="txtSector" promptText="opcional" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+               <Label styleClass="etiqueta" text="Web" GridPane.rowIndex="2"/>
+               <TextField fx:id="txtWeb" promptText="https://..." GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+               <Label styleClass="etiqueta" text="Registro *" GridPane.rowIndex="3"/>
+               <DatePicker fx:id="dpFecha" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1"
+                           GridPane.rowIndex="3"/>
+            </GridPane>
+            <FlowPane alignment="CENTER_RIGHT" hgap="12.0">
+               <padding>
+                  <Insets top="6.0"/>
+               </padding>
+               <Button mnemonicParsing="false" onAction="#goBack" styleClass="btn-secondary" text="Volver">
+                  <graphic>
+                     <ImageView fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../previous.png"/>
+                     </ImageView>
+                  </graphic>
+               </Button>
+               <Button defaultButton="true" mnemonicParsing="false" onAction="#save" styleClass="btn-primary"
+                       text="Guardar">
+                  <graphic>
+                     <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../disk.png"/>
+                     </ImageView>
+                  </graphic>
+               </Button>
+            </FlowPane>
+         </VBox>
       </VBox>
    </center>
 </BorderPane>

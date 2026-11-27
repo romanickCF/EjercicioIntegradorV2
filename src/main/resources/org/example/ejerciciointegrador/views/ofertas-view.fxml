@@ -16,9 +16,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="720.0" prefWidth="1180.0" styleClass="trackly-root" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ejerciciointegrador.controllers.OfertasController">
+<BorderPane prefHeight="720.0" prefWidth="1180.0" styleClass="trackly-root" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ejerciciointegrador.controllers.OfertasController">
    <left>
       <VBox spacing="8.0" styleClass="sidebar">
          <padding>
@@ -30,8 +31,8 @@
                   <Insets bottom="12.0" left="4.0" right="4.0" top="2.0" />
                </padding>
                <children>
-                  <Label alignment="CENTER" style="-fx-background-color: #EB6A4B; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 8; -fx-min-width: 30; -fx-min-height: 30;" text="t" />
-                  <Label style="-fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-font-size: 20px;" text="trackly" />
+                  <Label alignment="CENTER" style="-fx-background-color: #EB6A4B; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 8; -fx-min-width: 30; -fx-min-height: 30;" text="T" />
+                  <Label style="-fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-font-size: 20px;" text="Trackly" />
                </children>
             </HBox>
             <Label styleClass="sidebar-section-label" text="WORKSPACE">
@@ -109,7 +110,7 @@
                               <Label styleClass="etiqueta" text="Texto" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                               <TextField fx:id="txtTexto" promptText="título o notas" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                               <Label styleClass="etiqueta" text="Empresa" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                              <ComboBox fx:id="cmbEmpresa" editable="true" promptText="nombre de empresa" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                              <ComboBox fx:id="cmbEmpresa" editable="true" maxWidth="1.7976931348623157E308" promptText="nombre de empresa" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                               <Label styleClass="etiqueta" text="Estado" GridPane.columnIndex="4" GridPane.rowIndex="0" />
                               <ComboBox fx:id="cmbEstado" maxWidth="1.7976931348623157E308" GridPane.columnIndex="5" GridPane.rowIndex="0" />
 
@@ -129,6 +130,11 @@
                                  </children>
                               </HBox>
                            </children>
+                           <rowConstraints>
+                              <RowConstraints />
+                              <RowConstraints />
+                              <RowConstraints />
+                           </rowConstraints>
                         </GridPane>
 
                         <TableView fx:id="table" VBox.vgrow="ALWAYS">
