@@ -2,5 +2,6 @@
 <project version="4">
   <component name="DataSourcePerFileMappings">
     <file url="file://$PROJECT_DIR$/src/main/java/org/example/ejerciciointegrador/data/OfertaJdbcDAO.java" value="2ab22819-0b26-44d3-b7f3-61d9a86b1412" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/schema.sql" value="2ab22819-0b26-44d3-b7f3-61d9a86b1412" />
   </component>
 </project>

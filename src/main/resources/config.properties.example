@@ -1,0 +1,6 @@
+# Plantilla de configuración de la base de datos.
+# Copia este fichero como config.properties y ajusta los valores a tu MySQL.
+# Las variables de entorno DB_URL, DB_USER y DB_PASSWORD tienen prioridad.
+db.url=jdbc:mysql://localhost:3307/integrador?createDatabaseIfNotExist=true
+db.user=root
+db.password=cambia-esta-contrasena

@@ -1,4 +1,7 @@
 target/
+
+# Configuración local de la base de datos (contiene credenciales)
+src/main/resources/config.properties
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
